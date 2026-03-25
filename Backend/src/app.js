@@ -6,6 +6,18 @@ const noteModel= require('./models/note.model');
 //middleware
 app.use(express.json());
 
+// CORS middleware
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+    if (req.method === 'OPTIONS') {
+        res.sendStatus(200);
+    } else {
+        next();
+    }
+});
+
 //create note API call
 app.post("/api/notes",async (req,res)=>{
     const {title, description}= req.body;
